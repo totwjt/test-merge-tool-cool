@@ -231,9 +231,6 @@
               <template v-if="record?.state == 0">
                 <AButton @click="onRemove(record, index)" v-auth="'delDoctor_2'" type="link">删除医生</AButton>
               </template>
-              <template v-if="record?.idcard" >
-              <AButton @click="protocolShow(record, index)" v-auth="'doctorAgreement_2'" type="link">协议</AButton>
-              </template>
             </ASpace>
           </template>
         </template>
@@ -274,9 +271,6 @@
 
     <!-- 批量更改药房 -->
     <MultiBindPharmacy ref="multiBindPharmacyRef" @finished="onMultiBindPharmacyClose" />
-
-    <!-- 医生协议管理 -->
-    <protocolDoctor v-model:visible="protocolState.visible" :doctorInfo="protocolState.doctorInfo" />
   </PageView>
 </template>
 
@@ -313,15 +307,13 @@ import TableSelectButton from './components/TableSelectButton.vue'
 import { DoctorDetailDrawer } from './components/DoctorDetail'
 import type { DoctorDetailDrawerInstance } from './components/DoctorDetail'
 import DoctorSetting from './doctorSetting/doctorSetting.vue'
-import protocolDoctor from '@/components/userManage/doctor/protocolDoctor.vue'
 import {
   useDoctorAction,
   useDoctorAssistant,
   useDoctorBusiness,
   useDoctorDetail,
   useDoctorQRCode,
-  useDoctorRemove,
-  useDoctorProtocol
+  useDoctorRemove
 } from './hooks'
 
 
@@ -431,7 +423,6 @@ const { addShow, editShow } = useDoctorAction(doctorActionRef, getData);
 const { state: qrcodeState, show: qrcodeShow, cancel: qrcodeCancel } = useDoctorQRCode(getData);
 const { state: businessState, show: businessShow, cancel: businessCancel } = useDoctorBusiness(getData);
 const { state: assistantState, show: assistantShow, cancel: assistantCancel } = useDoctorAssistant(getData);
-const { state: protocolState, show: protocolShow, cancel: protocolCancel } = useDoctorProtocol();
 const { onRemove } = useDoctorRemove(getData);
 
 onMounted(() => {
